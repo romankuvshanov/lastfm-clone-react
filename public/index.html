@@ -3,11 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css" type="text/css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Copy of last.fm web-app I've made at Tensor frontend course"
     />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -18,11 +22,449 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Last.fm CLONE - Main page</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <header class="nav-bar">
+      <a href="/" class="nav-bar__logo"><img src="imgs/last-fm-logo-vector-cropped.svg" alt="Last.fm logo" width="104" height="40"></a>
+      <nav>
+        <ul class="nav-bar__links">
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text"><img src="imgs/search-icon.png" alt="Search icon" width="14" height="14"></a></li>
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text">Home</a></li>
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text">Live</a></li>
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text">Music</a></li>
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text">Charts</a></li>
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text">Events</a></li>
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text">Features</a></li>
+          <li class="nav-bar__link-item"><a href="#" class="nav-bar__link-text"><img class="nav-bar__avatar" src="imgs/avatar.webp" alt="User avatar icon" width="32" height="32"></a></li>
+        </ul>
+      </nav>
+    </header>
+    <h1 class="page-headline">Music</h1>
+    <section class="hot-rn">
+      <h2 class="section-headline">Hot right now</h2>
+      <div class="hot-rn__artists-container">
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+        <figure class="artist-card">
+          <img class="artist-card__img" src="imgs/artist-cover.webp" alt="Photo of the artist" width="500" height="500">
+          <figcaption><a class="artist-card__caption" href="#">Lana Del Rey</a></figcaption>
+          <ul class="artist-card__tags">
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">indie</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">pop</a></li>
+            <li class="artist-card__tag"><a class="artist-card__link" href="#">female vocalists</a></li>
+          </ul>
+        </figure>
+      </div>
+    </section>
+    <section class="pop-tracks">
+      <h2 class="section-headline">Popular tracks</h2>
+      <div class="pop-tracks__song-container">
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="song-card">
+          <img class="song-card__img" src="imgs/song-icon.webp" alt="Icon of the song" width="300" height="300">
+          <div class="song-card__text-info">
+            <p><a class="song-card__song-title" href="#">SEXY NUKIM (feat. RM of BTS)</a></p>
+            <p><a class="song-card__artist-title" href="#">Balming Tiger</a></p>
+            <ul class="song-card__tags">
+              <li class="song-card__tag"><a class="song-card__link" href="#">rap</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">hip hop</a></li>
+              <li class="song-card__tag"><a class="song-card__link" href="#">alternative</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <nav class="site-nav">
+        <section>
+          <h2 class="site-nav__title">COMPANY</h2>
+          <ul>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">About Last.fm</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Contact us</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Jobs</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="site-nav__title">HELP</h2>
+          <ul>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Track My Music</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Community Support</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Community Guidelines</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Help</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="site-nav__title">GOODIES</h2>
+          <ul>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Download Scrobbler</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Developer API</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Free Music Downloads</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Merchandise</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="site-nav__title">ACCOUNT</h2>
+          <ul>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Inbox</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Settings</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Last.fm Pro</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Logout</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="site-nav__title">FOLLOW US</h2>
+          <ul>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Facebook</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Twitter</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">Instagram</a></li>
+            <li class="site-nav__list-element"><a class="site-nav__link" href="#">YouTube</a></li>
+          </ul>
+        </section>
+      </nav>
+      <section class="bottom-nav">
+        <div>
+          <nav class="bottom-nav__lang-nav">
+            <ul>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link bottom-nav__lang-link--active" href="#">English</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Deutsch</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Español</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Français</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Italiano</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">日本語</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Polski</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Português</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Русский</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Svenska</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">Türkçe</a></li>
+              <li class="bottom-nav__lang-link-elem"><a class="bottom-nav__lang-link" href="#">简体中文</a></li>
+            </ul>
+          </nav>
+          <a class="bottom-nav__timezone-link" href="#">Time zone: <span class="bottom-nav__timezone-current">Asia/Yekaterinburg</span></a>
+          <div class="bottom-nav__legal-nav-container">
+            <a class="bottom-nav__legal-nav_link" href="#">CBS Interactive</a>
+            <p class="bottom-nav__legal-nav_paragraph">© 2022 Last.fm Ltd. All rights reserved</p>
+            <nav class="bottom-nav__legal-nav">
+              <ul class="bottom-nav__legal-nav_links">
+                <li class="bottom-nav__legal-nav_link-elem"><a class="bottom-nav__legal-nav_link" href="#">Terms of Use</a></li>
+                <li class="bottom-nav__legal-nav_link-elem"><a class="bottom-nav__legal-nav_link" href="#">Privacy Policy</a></li>
+                <li class="bottom-nav__legal-nav_link-elem"><a class="bottom-nav__legal-nav_link" href="#">Legal Policies</a></li>
+                <li class="bottom-nav__legal-nav_link-elem"><a class="bottom-nav__legal-nav_link" href="#">Cookies Policy</a></li>
+                <li class="bottom-nav__legal-nav_link-elem"><a class="bottom-nav__legal-nav_link" href="#">Jobs at ViacomCBS</a></li>
+                <li class="bottom-nav__legal-nav_link-elem"><a class="bottom-nav__legal-nav_link" href="#">Last.fm Music</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        
+        <div class="bottom-nav__audioscrobbler">
+          <p class="bottom-nav__sign">Audioscrobbler</p>
+          <img src="imgs/iconmonstr-last-fm-1-cropped.svg" alt="Last.fm short logo" width="37" height="20">
+        </div>
+      </section>
+    </footer>
+    <!-- TODO: Conver pics to webp -->
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
