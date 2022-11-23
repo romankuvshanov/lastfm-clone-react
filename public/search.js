@@ -16,7 +16,8 @@ const API_KEY = 'eeaaf21820d9a097b7a45e491cd6344b';
             throw new Error('Что-то пошло не так. Пожалуйста, попробуйте позже');
         }
     } catch (err) {
-        if (err instanceof Error) showErrorMessage(err);
+        if (err.name === 'AbortError') throw err;
+        else if (err instanceof Error) showErrorMessage(err);
     }
 }
 
@@ -83,7 +84,8 @@ async function enrichTracksWithCoversAndDuration(tracksObject, abortController) 
             })))
         .then(() => { return Promise.resolve(tracksObjectClone) })
         .catch((err) => {
-            if (err instanceof Error) showErrorMessage(err);
+            if (err.name === 'AbortError') throw err;
+            else if (err instanceof Error) showErrorMessage(err);
         });
 
     return tracksObjectClone;
@@ -216,12 +218,21 @@ searchButton.addEventListener('click', () => {
     
 
     const artistsObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchInput.value}&api_key=${API_KEY}&format=json&limit=8`, controller)
-        .catch((err) => showErrorMessage(err));
+        .catch((err) => {
+            if (err.name === 'AbortError') throw err;
+            else if (err instanceof Error) showErrorMessage(err);
+        });
     const albumsObject = getRequestResults(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${searchInput.value}&api_key=${API_KEY}&format=json&limit=8`, controller)
-        .catch((err) => showErrorMessage(err));
-    const tracksObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${searchInput.value}&api_key=${API_KEY}&format=json&limit=10`, controller).catch((err) => showErrorMessage(err))
+        .catch((err) => {
+            if (err.name === 'AbortError') throw err;
+            else if (err instanceof Error) showErrorMessage(err);
+        });
+    const tracksObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${searchInput.value}&api_key=${API_KEY}&format=json&limit=10`, controller)
         .then((tracksObject) => enrichTracksWithCoversAndDuration(tracksObject, controller))
-        .catch((err) => showErrorMessage(err));
+        .catch((err) => {
+            if (err.name === 'AbortError') throw err;
+            else if (err instanceof Error) showErrorMessage(err);
+        });
 
     Promise.all([artistsObject, albumsObject, tracksObject])
         .then(([artistsObject, albumsObject, tracksObject]) => {
@@ -235,7 +246,10 @@ searchButton.addEventListener('click', () => {
             showTracksResults(tracksObject);
             isLoading = false;
         })
-        .catch((err) => showErrorMessage(err));
+        .catch((err) => {
+            if (err.name === 'AbortError');
+            else if (err instanceof Error) showErrorMessage(err);
+        });
 });
 
 // Prevents default form behaviour
