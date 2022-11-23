@@ -29,7 +29,7 @@ async function getTopArtists() {
  * @return {object} js object representing info about given top artists enriched with tags
  */
 async function enrichArtistsWithTags(artistsObject) {
-    const artistObjectClone = JSON.parse(JSON.stringify(artistsObject));
+    const artistObjectClone = structuredClone(artistsObject);
 
     await Promise.all(artistObjectClone.artists.artist
         .map(artist => fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist=${artist.name}&api_key=${API_KEY}&format=json&autocorrect=1`)
@@ -93,7 +93,7 @@ async function getTopTracks() {
  * @return {object} js object representing info about given top tracks enriched with covers
  */
 async function enrichTracksWithTagsAndCovers(tracksObject) {
-    const tracksObjectClone = JSON.parse(JSON.stringify(tracksObject));
+    const tracksObjectClone = structuredClone(tracksObject);
 
     await Promise.all(tracksObjectClone.tracks.track.map(track => fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist.name}&track=${track.name}&format=json&autocorrect=1`)
         .then((response) => response.json())
@@ -151,7 +151,7 @@ function showErrorMessage() {
  *
  */
 function hideLoadingMessageArtists() {
-    const artistsLoadingMessage = document.getElementById('js-hot-rn__artists-container').querySelector('.loading-message');
+    const artistsLoadingMessage = document.querySelector('#js-hot-rn__artists-container .loading-message');
     artistsLoadingMessage.style.display = 'none';
 }
 
@@ -160,20 +160,16 @@ function hideLoadingMessageArtists() {
  *
  */
 function hideLoadingMessageTracks() {
-    const tracksLoadingMessage = document.getElementById('js-pop-tracks__song-container').querySelector('.loading-message');
+    const tracksLoadingMessage = document.querySelector('#js-pop-tracks__song-container .loading-message');
     tracksLoadingMessage.style.display = 'none';
 }
 
-getTopArtists().then((res) => {
-    enrichArtistsWithTags(res).then((res) => {
-        hideLoadingMessageArtists();
-        addArtistsToThePage(res);
-    }).catch(showErrorMessage);
-}).catch(showErrorMessage);
+const topArtists = getTopArtists().then((res) => enrichArtistsWithTags(res)).catch(showErrorMessage);
+const topTracks = getTopTracks().then((res) => enrichTracksWithTagsAndCovers(res)).catch(showErrorMessage);
 
-getTopTracks().then((res) => {
-    enrichTracksWithTagsAndCovers(res).then((res) => {
-        hideLoadingMessageTracks();
-        addTracksToThePage(res);
-    }).catch(showErrorMessage);
+Promise.all([topArtists, topTracks]).then(([topArtists, topTracks]) => {
+    hideLoadingMessageArtists();
+    hideLoadingMessageTracks();
+    addArtistsToThePage(topArtists);
+    addTracksToThePage(topTracks);
 }).catch(showErrorMessage);

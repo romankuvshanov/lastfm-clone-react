@@ -1,15 +1,14 @@
 const API_KEY = 'eeaaf21820d9a097b7a45e491cd6344b';
 
 /**
- * Returns object with search info for a given artist name
+ * Returns object with results of request
  *
- * @param {string} artistName Name of the artist you want to find
- * @return {object} object with search info for a given artist name
+ * @param {string} url Url you want to fetch
+ * @return {object} object with results info for a given request url
  */
-async function getArtistsRequest(artistName) {
-    let url = `https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${artistName}&api_key=${API_KEY}&format=json&limit=8`;
+ async function getRequestResults(url, abortController) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: abortController.signal });
         if (response.status === 200) {
             const data = await response.json();
             return data;
@@ -17,7 +16,7 @@ async function getArtistsRequest(artistName) {
             throw new Error('Что-то пошло не так. Пожалуйста, попробуйте позже');
         }
     } catch (err) {
-        if (err instanceof Error) showErrorMessage();
+        if (err instanceof Error) showErrorMessage(err);
     }
 }
 
@@ -42,27 +41,6 @@ function showArtistsResults(artistsObject) {
 }
 
 /**
- * Returns object with search info for a given album title
- *
- * @param {string} albumTitle Name of the album you want to find
- * @return {object} object with search info for a given album title
- */
-async function getAlbumsRequest(albumTitle) {
-    let url = `http://ws.audioscrobbler.com/2.0/?method=album.search&album=${albumTitle}&api_key=${API_KEY}&format=json&limit=8`;
-    try {
-        const response = await fetch(url);
-        if (response.status === 200) {
-            const data = await response.json();
-            return data;
-        } else {
-            throw new Error('Что-то пошло не так. Пожалуйста, попробуйте позже');
-        }
-    } catch (err) {
-        if (err instanceof Error) showErrorMessage();
-    }
-}
-
-/**
  * Show albums search results on the page
  *
  * @param {object} albumsObject object representing info about found albums
@@ -83,36 +61,15 @@ function showAlbumsResults(albumsObject) {
 }
 
 /**
- * Returns object with search info for a given track title
- *
- * @param {string} trackTitle Title of the track you want to find
- * @return {object} object with search info for a given track title
- */
-async function getTracksRequest(trackTitle) {
-    let url = `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${trackTitle}&api_key=${API_KEY}&format=json&limit=10`;
-    try {
-        const response = await fetch(url);
-        if (response.status === 200) {
-            const data = await response.json();
-            return data;
-        } else {
-            throw new Error('Что-то пошло не так. Пожалуйста, попробуйте позже');
-        }
-    } catch (err) {
-        if (err instanceof Error) showErrorMessage();
-    }
-}
-
-/**
  * Adds covers and duration info to the given tracks object and return new js tracks object
  *
  * @param {object} tracksObject js object representing info about given top tracks
  * @return {object} js object representing info about given top tracks enriched with covers and duration info
  */
-async function enrichTracksWithCoversAndDuration(tracksObject) {
-    const tracksObjectClone = JSON.parse(JSON.stringify(tracksObject));
+async function enrichTracksWithCoversAndDuration(tracksObject, abortController) {
+    const tracksObjectClone = structuredClone(tracksObject);
     await Promise.all(tracksObjectClone.results.trackmatches.track
-        .map(track => fetch(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist}&track=${track.name}&format=json&autocorrect=1`)
+        .map(track => fetch(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist}&track=${track.name}&format=json&autocorrect=1`, { signal: abortController.signal })
             .then((response) => response.json())
             .then((response) => {
                 if (!response.error) {
@@ -120,13 +77,13 @@ async function enrichTracksWithCoversAndDuration(tracksObject) {
                         track.duration = '';
                     else
                         track.duration = `${new Date(+response.track.duration).getMinutes()}:${new Date(+response.track.duration).getSeconds().toString().padStart(2, '0')}`;
-                    if (response.track?.album?.image || response.track?.album?.image === '') track.covers = response.track?.album?.image;
-                    else track.covers = track.image;
+                    if (response.track?.album?.image || response.track?.album?.image === '') track.cover = response.track?.album?.image[response.track?.album?.image.length - 1]['#text'];
+                    else track.cover = 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png';
                 }
             })))
         .then(() => { return Promise.resolve(tracksObjectClone) })
         .catch((err) => {
-            if (err instanceof Error) showErrorMessage();
+            if (err instanceof Error) showErrorMessage(err);
         });
 
     return tracksObjectClone;
@@ -140,12 +97,12 @@ async function enrichTracksWithCoversAndDuration(tracksObject) {
 function showTracksResults(tracksObject) {
     const tracksContainer = document.getElementById('js-tracks-container');
     for (let track of tracksObject.results.trackmatches.track) {
-        if (!(track.covers)) track.covers = [{ '#text': 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png' }];
+        if (!(track.cover)) track.cover = 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png';
         if (!(track.duration)) track.duration = '';
         const trackTemplate =
             `<div class="track">
             <button class="track__play-button" type="button"><img class="track__play-button-img" src="imgs/play-button.png"></button>
-            <img class="track__album-cover" src="${(track.covers[track.covers.length - 1]['#text']) ? track.covers[track.covers.length - 1]['#text'] : 'https://lastfm.freetls.fastly.net/i/u/300x300/4128a6eb29f94943c9d206c08e625904.png'}">
+            <img class="track__album-cover" src="${track.cover}">
             <button class="track__like-button" type="button"><img class="track__like-button-img" src="imgs/heart-icon.png"></button>
             <span class="track_song-title">${track.name}</span>
             <span class="track_artist-title">${track.artist}</span>
@@ -159,11 +116,13 @@ function showTracksResults(tracksObject) {
  * Shows error message to the user
  *
  */
-function showErrorMessage() {
-    if (!document.getElementsByClassName('error-message').length) {
-        const searchForm = document.getElementById('js-search-form');
-        searchForm.insertAdjacentHTML('afterend', '<p class="error-message error-message_search-page">Something went wrong. Please, try again later...</p>');
-        document.getElementById('js-artists-albums-tracks-container').style.display = 'none';
+function showErrorMessage(error) {
+    if (error.name !== 'AbortError') {
+        if (!document.getElementsByClassName('error-message').length) {
+            const searchForm = document.getElementById('js-search-form');
+            searchForm.insertAdjacentHTML('afterend', '<p class="error-message error-message_search-page">Something went wrong. Please, try again later...</p>');
+            document.getElementById('js-artists-albums-tracks-container').style.display = 'none';
+        }
     }
 }
 
@@ -231,7 +190,7 @@ function clearAnyPreviousResults() {
 }
 
 /**
- * Updates visual display of actial search menu item
+ * Updates visual display of actual search menu item
  * 
  * @param {MouseEvent} event Event that caused function call
  */
@@ -241,29 +200,42 @@ function updateActiveMenuElement(event) {
     event.currentTarget.classList.add('search-results-nav__link--active');
 }
 
+let controller = new AbortController();
+let isLoading = false;
 const searchButton = document.getElementById('js-search-form__search-button');
 searchButton.addEventListener('click', () => {
+    if (isLoading) {
+        if (controller) controller.abort();
+        controller = new AbortController();   
+    }
+    isLoading = true;
     const searchInput = document.getElementById('js-search-query');
     showHeadlineWithQuery(searchInput.value);
     showAlbumsArtistsTracksContainer();
     clearAnyPreviousResults();
+    
 
-    getArtistsRequest(searchInput.value).then((artistsObject) => {
-        hideLoadingMessageArtists();
-        showArtistsResults(artistsObject);
-    }).catch(showErrorMessage);
+    const artistsObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchInput.value}&api_key=${API_KEY}&format=json&limit=8`, controller)
+        .catch((err) => showErrorMessage(err));
+    const albumsObject = getRequestResults(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${searchInput.value}&api_key=${API_KEY}&format=json&limit=8`, controller)
+        .catch((err) => showErrorMessage(err));
+    const tracksObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${searchInput.value}&api_key=${API_KEY}&format=json&limit=10`, controller).catch((err) => showErrorMessage(err))
+        .then((tracksObject) => enrichTracksWithCoversAndDuration(tracksObject, controller))
+        .catch((err) => showErrorMessage(err));
 
-    getAlbumsRequest(searchInput.value).then((albumsObject) => {
-        hideLoadingMessageAlbums();
-        showAlbumsResults(albumsObject);
-    }).catch(showErrorMessage);
-
-    getTracksRequest(searchInput.value).then((tracksObject) =>
-        enrichTracksWithCoversAndDuration(tracksObject))
-        .then((tracksObject) => {
+    Promise.all([artistsObject, albumsObject, tracksObject])
+        .then(([artistsObject, albumsObject, tracksObject]) => {
+            showAlbumsArtistsTracksContainer();
+            clearAnyPreviousResults();
+            hideLoadingMessageArtists();
+            showArtistsResults(artistsObject);
+            hideLoadingMessageAlbums();
+            showAlbumsResults(albumsObject);
             hideLoadingMessageTracks();
             showTracksResults(tracksObject);
-        }).catch(showErrorMessage);
+            isLoading = false;
+        })
+        .catch((err) => showErrorMessage(err));
 });
 
 // Prevents default form behaviour
