@@ -6,7 +6,7 @@ const API_KEY = 'eeaaf21820d9a097b7a45e491cd6344b';
  * @param {string} url Url you want to fetch
  * @return {object} object with results info for a given request url
  */
- async function getRequestResults(url, abortController) {
+async function getRequestResults(url, abortController) {
     try {
         const response = await fetch(url, { signal: abortController.signal });
         if (response.status === 200) {
@@ -17,7 +17,7 @@ const API_KEY = 'eeaaf21820d9a097b7a45e491cd6344b';
         }
     } catch (err) {
         if (err.name === 'AbortError') throw err;
-        else if (err instanceof Error) showErrorMessage(err);
+        else if (err instanceof Error) showErrorMessage();
     }
 }
 
@@ -85,7 +85,7 @@ async function enrichTracksWithCoversAndDuration(tracksObject, abortController) 
         .then(() => { return Promise.resolve(tracksObjectClone) })
         .catch((err) => {
             if (err.name === 'AbortError') throw err;
-            else if (err instanceof Error) showErrorMessage(err);
+            else if (err instanceof Error) showErrorMessage();
         });
 
     return tracksObjectClone;
@@ -118,13 +118,11 @@ function showTracksResults(tracksObject) {
  * Shows error message to the user
  *
  */
-function showErrorMessage(error) {
-    if (error.name !== 'AbortError') {
-        if (!document.getElementsByClassName('error-message').length) {
-            const searchForm = document.getElementById('js-search-form');
-            searchForm.insertAdjacentHTML('afterend', '<p class="error-message error-message_search-page">Something went wrong. Please, try again later...</p>');
-            document.getElementById('js-artists-albums-tracks-container').style.display = 'none';
-        }
+function showErrorMessage() {
+    if (!document.getElementsByClassName('error-message').length) {
+        const searchForm = document.getElementById('js-search-form');
+        searchForm.insertAdjacentHTML('afterend', '<p class="error-message error-message_search-page">Something went wrong. Please, try again later...</p>');
+        document.getElementById('js-artists-albums-tracks-container').style.display = 'none';
     }
 }
 
@@ -203,35 +201,31 @@ function updateActiveMenuElement(event) {
 }
 
 let controller = new AbortController();
-let isLoading = false;
 const searchButton = document.getElementById('js-search-form__search-button');
 searchButton.addEventListener('click', () => {
-    if (isLoading) {
-        if (controller) controller.abort();
-        controller = new AbortController();   
-    }
-    isLoading = true;
+    if (controller) controller.abort();
+    controller = new AbortController();
+
     const searchInput = document.getElementById('js-search-query');
     showHeadlineWithQuery(searchInput.value);
     showAlbumsArtistsTracksContainer();
     clearAnyPreviousResults();
-    
 
     const artistsObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchInput.value}&api_key=${API_KEY}&format=json&limit=8`, controller)
         .catch((err) => {
             if (err.name === 'AbortError') throw err;
-            else if (err instanceof Error) showErrorMessage(err);
+            else if (err instanceof Error) showErrorMessage();
         });
     const albumsObject = getRequestResults(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${searchInput.value}&api_key=${API_KEY}&format=json&limit=8`, controller)
         .catch((err) => {
             if (err.name === 'AbortError') throw err;
-            else if (err instanceof Error) showErrorMessage(err);
+            else if (err instanceof Error) showErrorMessage();
         });
     const tracksObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${searchInput.value}&api_key=${API_KEY}&format=json&limit=10`, controller)
         .then((tracksObject) => enrichTracksWithCoversAndDuration(tracksObject, controller))
         .catch((err) => {
             if (err.name === 'AbortError') throw err;
-            else if (err instanceof Error) showErrorMessage(err);
+            else if (err instanceof Error) showErrorMessage();
         });
 
     Promise.all([artistsObject, albumsObject, tracksObject])
@@ -244,11 +238,10 @@ searchButton.addEventListener('click', () => {
             showAlbumsResults(albumsObject);
             hideLoadingMessageTracks();
             showTracksResults(tracksObject);
-            isLoading = false;
         })
         .catch((err) => {
             if (err.name === 'AbortError');
-            else if (err instanceof Error) showErrorMessage(err);
+            else if (err instanceof Error) showErrorMessage();
         });
 });
 
