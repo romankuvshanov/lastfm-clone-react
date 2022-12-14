@@ -23,26 +23,6 @@ async function getRequestResults(url) {
 }
 
 /**
- * Returns js object with 12 top artists
- *
- * @return {object} js object representing info about 12 top artists
- */
-async function getTopArtists() {
-    let url = `https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=12`;
-    try {
-        const response = await fetch(url);
-        if (response.status === 200) {
-            const data = await response.json();
-            return data;
-        } else {
-            throw new Error('Что-то пошло не так. Пожалуйста, попробуйте позже');
-        }
-    } catch (err) {
-        if (err instanceof Error) showErrorMessage();
-    }
-}
-
-/**
  * Ads tags to the given artists object and return new js artists object
  *
  * @param {object} artistsObject js object representing info about given top artists
@@ -83,26 +63,6 @@ function addArtistsToThePage(artistsObject) {
             </ul>
         </figure>`;
         artistsContainer.insertAdjacentHTML('beforeend', artistTemplate);
-    }
-}
-
-/**
- * Returns js object with 18 top tracks
- *
- * @return {object} js object representing info about 18 top tracks
- */
-async function getTopTracks() {
-    let url = `https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${API_KEY}&format=json&limit=18`;
-    try {
-        const response = await fetch(url);
-        if (response.status === 200) {
-            const data = await response.json();
-            return data;
-        } else {
-            throw new Error('Что-то пошло не так. Пожалуйста, попробуйте позже');
-        }
-    } catch (err) {
-        if (err instanceof Error) showErrorMessage();
     }
 }
 
