@@ -201,15 +201,18 @@ function updateActiveMenuElement(event) {
 }
 
 let controller = new AbortController();
+let previousRequest;
 const searchButton = document.getElementById('js-search-form__search-button');
 searchButton.addEventListener('click', () => {
+    const searchInput = document.getElementById('js-search-query');
+    if (previousRequest === searchInput.value) return;
     if (controller) controller.abort();
     controller = new AbortController();
-
-    const searchInput = document.getElementById('js-search-query');
+    
     showHeadlineWithQuery(searchInput.value);
     showAlbumsArtistsTracksContainer();
     clearAnyPreviousResults();
+    previousRequest = searchInput.value;
 
     const artistsObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchInput.value}&api_key=${API_KEY}&format=json&limit=8`, controller)
         .catch((err) => {

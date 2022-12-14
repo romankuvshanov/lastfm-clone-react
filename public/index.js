@@ -3,6 +3,26 @@
 const API_KEY = 'eeaaf21820d9a097b7a45e491cd6344b';
 
 /**
+ * Returns object with results of request
+ *
+ * @param {string} url Url you want to fetch
+ * @return {object} object with results info for a given request url
+ */
+async function getRequestResults(url) {
+    try {
+        const response = await fetch(url);
+        if (response.status === 200) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error('Что-то пошло не так. Пожалуйста, попробуйте позже');
+        }
+    } catch (err) {
+        if (err instanceof Error) showErrorMessage();
+    }
+}
+
+/**
  * Returns js object with 12 top artists
  *
  * @return {object} js object representing info about 12 top artists
@@ -98,11 +118,20 @@ async function enrichTracksWithTagsAndCovers(tracksObject) {
     await Promise.all(tracksObjectClone.tracks.track.map(track => fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist.name}&track=${track.name}&format=json&autocorrect=1`)
         .then((response) => response.json())
         .then((response) => {
-            track.tags = response.track.toptags.tag;
+            if (!response.error) {
+                if (response?.track?.toptags?.tag?.length > 0)
+                    track.tags = response.track.toptags.tag;
+                else
+                    track.tags = [{name:'not avliable'}, {name:'not avliable'}, {name:'not avliable'}];
             if (response.track?.album?.image)
                 track.covers = response.track?.album?.image;
             else
                 track.covers = track.image;
+            }
+            else {
+                track.tags = [{name:'not avliable'}, {name:'not avliable'}, {name:'not avliable'}];
+                track.covers = track.image;
+            }
         })))
         .catch((err) => {
             if (err instanceof Error) showErrorMessage();
@@ -119,6 +148,7 @@ async function enrichTracksWithTagsAndCovers(tracksObject) {
 function addTracksToThePage(tracksObject) {
     const tracksContainer = document.getElementById('js-pop-tracks__song-container');
     for (let track of tracksObject.tracks.track) {
+        
         const trackTemplate =
             `<div class="song-card">
             <img class="song-card__img" src="${track.covers[track.covers['length'] - 1]['#text']}" alt="Icon of the song" width="300" height="300">
@@ -164,8 +194,10 @@ function hideLoadingMessageTracks() {
     tracksLoadingMessage.style.display = 'none';
 }
 
-const topArtists = getTopArtists().then((res) => enrichArtistsWithTags(res)).catch(showErrorMessage);
-const topTracks = getTopTracks().then((res) => enrichTracksWithTagsAndCovers(res)).catch(showErrorMessage);
+const topArtists = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=12`)
+    .then((res) => enrichArtistsWithTags(res)).catch(showErrorMessage);
+const topTracks = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${API_KEY}&format=json&limit=18`)
+    .then((res) => enrichTracksWithTagsAndCovers(res)).catch(showErrorMessage);
 
 Promise.all([topArtists, topTracks]).then(([topArtists, topTracks]) => {
     hideLoadingMessageArtists();
