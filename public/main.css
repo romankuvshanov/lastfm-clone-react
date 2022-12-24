@@ -412,7 +412,6 @@ body {
     font-weight: 700;
     background-color: #ffffff;
     letter-spacing: -.4px;
-    display: none;
 }
 
 .search-results-nav {
@@ -462,7 +461,7 @@ body {
 .search-form {
     border: 2px solid #eee;
     border-radius: 3px;
-    margin: 17px 12px 0 0;
+    margin: 17px 12px 17px 0;
     display: flex;
     align-items: center;
     padding-right: 13px;
@@ -498,14 +497,9 @@ body {
     height: 16px;
 }
 
-.artists-albums-tracks-container {
-    display: none;
-}
-
 .search-results__headlines {
     font-family: "Barlow", sans-serif;
     font-size: 20px;
-    margin-top: 18px;
     margin-bottom: 18px;
     font-weight: 400;
 }
