@@ -4,9 +4,9 @@
  * @param {string} url Url you want to fetch
  * @return {object} object with results info for a given request url
  */
-export async function getRequestResults(url) {
+export async function getRequestResults(url, abortController) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {signal: abortController?.signal});
         if (response.status === 200) {
             const data = await response.json();
             return data;

@@ -14,17 +14,32 @@ export function SearchNav(props) {
         props.setShowOptions(event.target.id);
     }
 
+    const navLinks = [
+        {
+            title: 'Top Results',
+            id: 'js-top-results-button',
+        },
+        {
+            title: 'Artists',
+            id: 'js-artists-button',
+        },
+        {
+            title: 'Albums',
+            id: 'js-albums-button',
+        },
+        {
+            title: 'Tracks',
+            id: 'js-tracks-button',
+        },
+    ];
+
     return (
         <nav className="search-results-nav">
             <ul>
-                <li className="search-results-nav__element"><a onClick={handleClick} className={"search-results-nav__link " + (currentActiveNav === "js-top-results-button" ? "search-results-nav__link--active" : null)}
-                    href="/" id="js-top-results-button">Top Results</a></li>
-                <li className="search-results-nav__element"><a onClick={handleClick} className={"search-results-nav__link " + (currentActiveNav === "js-artists-button" ? "search-results-nav__link--active" : null)}
-                    href="/" id="js-artists-button">Artists</a></li>
-                <li className="search-results-nav__element"><a onClick={handleClick} className={"search-results-nav__link " + (currentActiveNav === "js-albums-button" ? "search-results-nav__link--active" : null)}
-                    href="/" id="js-albums-button">Albums</a></li>
-                <li className="search-results-nav__element"><a onClick={handleClick} className={"search-results-nav__link " + (currentActiveNav === "js-tracks-button" ? "search-results-nav__link--active" : null)}
-                    href="/" id="js-tracks-button">Tracks</a></li>
+                {navLinks.map((link) => {
+                    return (<li key={link.id} className="search-results-nav__element"><a onClick={handleClick} className={"search-results-nav__link " + (currentActiveNav === link.id ? "search-results-nav__link--active" : null)}
+                        href="/" id={link.id}>{link.title}</a></li>);
+                })}
             </ul>
         </nav>);
 }

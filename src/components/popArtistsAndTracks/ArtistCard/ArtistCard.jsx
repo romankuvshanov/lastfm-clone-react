@@ -13,7 +13,7 @@ export function ArtistCard(props) {
             <figcaption><a className="artist-card__caption" href="/">{props.artist.name}</a></figcaption>
             <ul className="artist-card__tags">
                 {props.artist.tags.map((tag) => {
-                    return <li key={hashCode(tag)} className="artist-card__tag"><a className="artist-card__link" href="/">{tag}</a></li>;
+                    return <li key={tag} className="artist-card__tag"><a className="artist-card__link" href="/">{tag}</a></li>;
                 })}
             </ul>
         </figure>);

@@ -15,14 +15,19 @@ export function SearchPage() {
     const [searchRequest, setSearchRequest] = useState();
     const [showOptions, setShowOptions] = useState('js-top-results-button');
     const [requestResults, setRequestResults] = useState();
-    const [hasError, setHasError] = useState(false)
+    const [hasError, setHasError] = useState(false);
+    
 
     useEffect(() => {
+        const abortController = new AbortController();
         if (searchRequest !== undefined) {
             setRequestResults();
-            getSearchRequestResults(searchRequest)
+            getSearchRequestResults(searchRequest, abortController)
                 .then((res) => setRequestResults(res))
-                .catch(() => setHasError(true));
+                .catch((error) => {
+                    if (error.name !== 'AbortError') setHasError(true);
+                });
+            return () => { abortController.abort(); }
         }
     }, [searchRequest]);
 

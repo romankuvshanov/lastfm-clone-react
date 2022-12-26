@@ -7,18 +7,18 @@ import { getRequestResults } from "./common";
  * @param {request} string Search request
  * @return {Object} Object with three arrays with the search request results for artists, albums and tracks
  */
-export async function getSearchRequestResults(request) {
-    const artistsObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${request}&api_key=${API_KEY}&format=json&limit=8`)
+export async function getSearchRequestResults(request, abortController) {
+    const artistsObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${request}&api_key=${API_KEY}&format=json&limit=8`, abortController)
         .catch((err) => {
             throw err;
         });
     
-    const albumsObject = getRequestResults(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${request}&api_key=${API_KEY}&format=json&limit=8`)
+    const albumsObject = getRequestResults(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${request}&api_key=${API_KEY}&format=json&limit=8`, abortController)
         .catch((err) => {
             throw err;
         });
-    const tracksObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${request}&api_key=${API_KEY}&format=json&limit=10`)
-        .then((tracksObject) => enrichTracksWithCoversAndDuration(tracksObject))
+    const tracksObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${request}&api_key=${API_KEY}&format=json&limit=10`, abortController)
+        .then((tracksObject) => enrichTracksWithCoversAndDuration(tracksObject, abortController))
         .catch((err) => {
             throw err;
         });
@@ -42,10 +42,10 @@ export async function getSearchRequestResults(request) {
  * @param {object} tracksObject js object representing info about given top tracks
  * @return {object} js object representing info about given top tracks enriched with covers and duration info
  */
-async function enrichTracksWithCoversAndDuration(tracksObject) {
+async function enrichTracksWithCoversAndDuration(tracksObject, abortController) {
     const tracksObjectClone = structuredClone(tracksObject);
     await Promise.all(tracksObjectClone?.results?.trackmatches?.track
-        .map(track => fetch(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist}&track=${track.name}&format=json&autocorrect=1`)
+        .map(track => fetch(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist}&track=${track.name}&format=json&autocorrect=1`, {signal: abortController?.signal})
             .then((response) => response.json())
             .then((response) => {
                 if (!response.error) {
