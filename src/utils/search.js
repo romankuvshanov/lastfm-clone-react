@@ -5,6 +5,7 @@ import { getRequestResults } from "./common";
  * Returns array with the search request results for artists, albums and tracks
  *
  * @param {request} string Search request
+ * @param {AbortController} abortController AbortController for cancelling the request
  * @return {Object} Object with three arrays with the search request results for artists, albums and tracks
  */
 export async function getSearchRequestResults(request, abortController) {
@@ -40,6 +41,7 @@ export async function getSearchRequestResults(request, abortController) {
  * Adds covers and duration info to the given tracks object and return new js tracks object
  *
  * @param {object} tracksObject js object representing info about given top tracks
+ * @param {AbortController} abortController AbortController for cancelling the request
  * @return {object} js object representing info about given top tracks enriched with covers and duration info
  */
 async function enrichTracksWithCoversAndDuration(tracksObject, abortController) {

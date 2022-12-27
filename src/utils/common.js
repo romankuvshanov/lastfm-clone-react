@@ -2,6 +2,7 @@
  * Returns object with results of request
  *
  * @param {string} url Url you want to fetch
+ * @param {AbortController} abortController AbortController for cancelling the request
  * @return {object} object with results info for a given request url
  */
 export async function getRequestResults(url, abortController) {

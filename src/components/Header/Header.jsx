@@ -13,7 +13,6 @@ export function Header() {
             <nav>
                 <ul className="nav-bar__links">
                     <li className="nav-bar__link-item"><a href="/search" className="nav-bar__link-text"><img src="imgs/search-icon.png" alt="Search icon" width="14" height="14" /></a></li>
-                    {/* Я вот так сделал. Подскажите, пожалуйста. Как в react это принято делать? */}
                     {navBarElems.map((elem) => {
                         return (<li key={elem} className="nav-bar__link-item"><a href="/" className="nav-bar__link-text">{elem}</a></li>);
                     })}
