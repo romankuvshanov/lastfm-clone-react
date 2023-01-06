@@ -14,7 +14,7 @@ export async function getSearchRequestResults(request, abortController) {
             throw err;
         });
     
-    const albumsObject = getRequestResults(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${request}&api_key=${API_KEY}&format=json&limit=8`, abortController)
+    const albumsObject = getRequestResults(`https://ws.audioscrobbler.com/2.0/?method=album.search&album=${request}&api_key=${API_KEY}&format=json&limit=8`, abortController)
         .catch((err) => {
             throw err;
         });
@@ -47,7 +47,7 @@ export async function getSearchRequestResults(request, abortController) {
 async function enrichTracksWithCoversAndDuration(tracksObject, abortController) {
     const tracksObjectClone = structuredClone(tracksObject);
     await Promise.all(tracksObjectClone?.results?.trackmatches?.track
-        .map(track => fetch(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist}&track=${track.name}&format=json&autocorrect=1`, {signal: abortController?.signal})
+        .map(track => fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${API_KEY}&artist=${track.artist}&track=${track.name}&format=json&autocorrect=1`, {signal: abortController?.signal})
             .then((response) => response.json())
             .then((response) => {
                 if (!response.error) {

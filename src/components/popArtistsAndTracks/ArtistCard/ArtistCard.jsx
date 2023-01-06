@@ -1,5 +1,4 @@
 import React from 'react';
-import { hashCode } from '../../../utils/common';
 
 /**
  * Returns React component for the given artist
